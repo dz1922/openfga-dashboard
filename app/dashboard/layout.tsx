@@ -51,8 +51,8 @@ export default function DashboardLayout({
       <Header />
       <div className="flex-1 flex">
         <Sidebar />
-        <main className="flex-1 md:ml-64 md:pl-6">
-          <div className="container py-6 pr-6">{children}</div>
+        <main className="flex-1 md:ml-64">
+          <div className="py-6 px-6 lg:px-8 xl:px-12">{children}</div>
         </main>
       </div>
     </div>
