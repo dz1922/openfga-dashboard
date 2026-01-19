@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # OpenFGA Dashboard
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - openfga
+    environment:
+      - NODE_ENV=production
+
+  # OpenFGA Server
+  openfga:
+    image: openfga/openfga:latest
+    command: run
+    ports:
+      - "8080:8080"   # HTTP API
+      - "8081:8081"   # gRPC API
+      - "3001:3000"   # Playground (if enabled)
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=memory
+      - OPENFGA_PLAYGROUND_ENABLED=true
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/healthz"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Optional: OpenFGA with PostgreSQL for persistence
+  # Uncomment the following services to use PostgreSQL instead of in-memory storage
+
+  # postgres:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     - POSTGRES_USER=openfga
+  #     - POSTGRES_PASSWORD=openfga
+  #     - POSTGRES_DB=openfga
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U openfga"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+
+  # openfga-postgres:
+  #   image: openfga/openfga:latest
+  #   command: run
+  #   ports:
+  #     - "8080:8080"
+  #     - "8081:8081"
+  #   environment:
+  #     - OPENFGA_DATASTORE_ENGINE=postgres
+  #     - OPENFGA_DATASTORE_URI=postgres://openfga:openfga@postgres:5432/openfga?sslmode=disable
+  #     - OPENFGA_PLAYGROUND_ENABLED=true
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+
+# volumes:
+#   postgres_data:

@@ -88,6 +88,27 @@ npm run build
 npm start
 ```
 
+### Deploy with Docker
+
+Run the dashboard with OpenFGA server using Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+This will start:
+- **Dashboard** at http://localhost:3000
+- **OpenFGA API** at http://localhost:8080
+
+To build and run only the dashboard:
+
+```bash
+docker build -t openfga-dashboard .
+docker run -p 3000:3000 openfga-dashboard
+```
+
+For persistent storage with PostgreSQL, see the commented section in `docker-compose.yml`.
+
 ## Project Structure
 
 ```
