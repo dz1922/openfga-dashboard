@@ -3,10 +3,9 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ConnectionForm } from '@/components/connection/connection-form'
-import { Footer } from '@/components/layout/footer'
 import { Button } from '@/components/ui/button'
 import { useConnectionStore } from '@/lib/store/connection-store'
-import { Database, Play, Sparkles, ArrowRight } from 'lucide-react'
+import { Database, Play, Sparkles, ArrowRight, Github, Coffee } from 'lucide-react'
 
 export default function HomePage() {
   const router = useRouter()
@@ -97,9 +96,39 @@ export default function HomePage() {
             </a>
           </p>
         </div>
-      </main>
 
-      <Footer />
+        {/* Footer Links */}
+        <div className="mt-12 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+          <a
+            href="https://opensource.org/licenses/Apache-2.0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground transition-colors"
+          >
+            Apache 2.0
+          </a>
+          <span className="text-slate-300 dark:text-slate-700">•</span>
+          <a
+            href="https://github.com/dz1922/openfga-dashboard"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+          >
+            <Github className="h-4 w-4" />
+            GitHub
+          </a>
+          <span className="text-slate-300 dark:text-slate-700">•</span>
+          <a
+            href="https://buymeacoffee.com/dachao"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+          >
+            <Coffee className="h-4 w-4" />
+            Buy me a coffee
+          </a>
+        </div>
+      </main>
     </div>
   )
 }

@@ -10,7 +10,9 @@ import {
   Link2,
   Search,
   ChevronRight,
-  Home
+  Home,
+  Github,
+  Coffee
 } from 'lucide-react'
 
 interface SidebarNavItem {
@@ -60,8 +62,8 @@ export function Sidebar() {
 
   return (
     <aside className="fixed left-0 top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-64 shrink-0 border-r md:block">
-      <div className="h-full py-6 pr-6 lg:py-8">
-        <nav className="flex flex-col space-y-1 pl-4">
+      <div className="h-full py-6 pr-6 lg:py-8 flex flex-col">
+        <nav className="flex flex-col space-y-1 pl-4 flex-1">
           {baseItems.map((item) => (
             <Link
               key={item.href}
@@ -109,6 +111,28 @@ export function Sidebar() {
             </>
           )}
         </nav>
+
+        {/* Bottom Links */}
+        <div className="pl-4 pt-4 border-t space-y-1">
+          <a
+            href="https://github.com/dz1922/openfga-dashboard"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+          >
+            <Github className="mr-2 h-4 w-4" />
+            GitHub
+          </a>
+          <a
+            href="https://buymeacoffee.com/dachao"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+          >
+            <Coffee className="mr-2 h-4 w-4" />
+            Buy me a coffee
+          </a>
+        </div>
       </div>
     </aside>
   )

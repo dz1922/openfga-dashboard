@@ -98,7 +98,7 @@ export function ConnectionForm() {
         <Alert variant="warning">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription className="text-sm">
-            Credentials stored in browser localStorage.<br />
+            Credentials stored in browser local storage.<br />
             Only connect to trusted servers with CORS enabled.
           </AlertDescription>
         </Alert>
