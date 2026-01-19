@@ -230,10 +230,25 @@ export default function StoreOverviewPage() {
               <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
                 <Hash className="h-4 w-4 text-slate-500" />
               </div>
-              <div>
+              <div className="flex-1">
                 <dt className="text-sm font-medium text-muted-foreground">Store ID</dt>
-                <dd className="mt-1 font-mono text-sm text-slate-900 dark:text-white break-all">
-                  {currentStore.id}
+                <dd className="mt-1 flex items-center gap-2">
+                  <span className="font-mono text-sm text-slate-900 dark:text-white break-all">
+                    {currentStore.id}
+                  </span>
+                  {!playgroundMode && (
+                    <button
+                      onClick={handleCopyId}
+                      className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0"
+                      title="Copy Store ID"
+                    >
+                      {copied ? (
+                        <Check className="h-3.5 w-3.5 text-emerald-500" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                      )}
+                    </button>
+                  )}
                 </dd>
               </div>
             </div>

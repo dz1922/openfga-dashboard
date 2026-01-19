@@ -10,7 +10,7 @@ import { ModelGraph } from '@/components/model/model-graph'
 import { useAuthorizationModels } from '@/hooks/use-openfga'
 import { useConnectionStore, PLAYGROUND_SAMPLE_MODEL } from '@/lib/store/connection-store'
 import { modelToDsl, dslToModel } from '@/lib/openfga/dsl-converter'
-import { Loader2, AlertCircle, Save, CheckCircle2, History, Code2, GitBranch, Sparkles, FileCode } from 'lucide-react'
+import { Loader2, AlertCircle, Save, CheckCircle2, History, Code2, GitBranch, Sparkles, FileCode, Copy, Check } from 'lucide-react'
 import type { AuthorizationModel, WriteAuthorizationModelRequest } from '@/lib/openfga/types'
 
 // Dynamically import Monaco Editor to avoid SSR issues
@@ -46,6 +46,15 @@ export default function ModelPage() {
   const [saveSuccess, setSaveSuccess] = useState(false)
   const [saving, setSaving] = useState(false)
   const [initialized, setInitialized] = useState(false)
+  const [copiedModelId, setCopiedModelId] = useState(false)
+
+  const handleCopyModelId = async () => {
+    if (selectedModelId) {
+      await navigator.clipboard.writeText(selectedModelId)
+      setCopiedModelId(true)
+      setTimeout(() => setCopiedModelId(false), 2000)
+    }
+  }
 
   // Initialize with sample model in playground mode
   useEffect(() => {
@@ -211,6 +220,19 @@ export default function ModelPage() {
                   ))}
                 </SelectContent>
               </Select>
+              {selectedModelId && (
+                <button
+                  onClick={handleCopyModelId}
+                  className="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  title="Copy Model ID"
+                >
+                  {copiedModelId ? (
+                    <Check className="h-3.5 w-3.5 text-emerald-500" />
+                  ) : (
+                    <Copy className="h-3.5 w-3.5 text-slate-500" />
+                  )}
+                </button>
+              )}
             </div>
           )}
 
