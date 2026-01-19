@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
 import { useConnectionStore } from '@/lib/store/connection-store'
+import { Loader2 } from 'lucide-react'
 
 export default function DashboardLayout({
   children,
@@ -14,19 +15,34 @@ export default function DashboardLayout({
   const router = useRouter()
   const isConnected = useConnectionStore((state) => state.isConnected)
   const config = useConnectionStore((state) => state.config)
+  const playgroundMode = useConnectionStore((state) => state.playgroundMode)
+  const [hydrated, setHydrated] = useState(false)
+
+  // Wait for hydration
+  useEffect(() => {
+    setHydrated(true)
+  }, [])
 
   useEffect(() => {
-    // If not connected but have config, try to reconnect
-    if (!isConnected && config) {
-      // Auto-reconnect logic is handled by the store's rehydration
-    }
-    // If not connected and no config, redirect to home
-    if (!isConnected && !config) {
+    if (!hydrated) return
+
+    // If not connected and not in playground mode, redirect to home
+    if (!isConnected && !playgroundMode) {
       router.push('/')
     }
-  }, [isConnected, config, router])
+  }, [isConnected, playgroundMode, router, hydrated])
 
-  if (!config) {
+  // Show loading while hydrating
+  if (!hydrated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+      </div>
+    )
+  }
+
+  // If not connected and not in playground, don't render
+  if (!isConnected && !playgroundMode) {
     return null
   }
 
