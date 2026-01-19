@@ -3,7 +3,7 @@
 import { useConnectionStore } from '@/lib/store/connection-store'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { LogOut, Database, Server, Play } from 'lucide-react'
+import { LogOut, Server, Play } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -26,11 +26,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+      <div className="container flex h-14 items-center pl-4">
         <div className="mr-4 flex">
-          <Link href={playgroundMode ? '/dashboard/stores/playground-store/model' : '/'} className="mr-6 flex items-center space-x-2">
-            <Database className="h-6 w-6" />
-            <span className="font-bold">OpenFGA Dashboard</span>
+          <Link href={playgroundMode ? '/dashboard/stores/playground-store/model' : '/'} className="mr-6 flex items-center">
+            <span className="font-bold text-lg">OpenFGA Dashboard</span>
           </Link>
         </div>
 
