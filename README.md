@@ -1,6 +1,6 @@
 # OpenFGA Dashboard
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A modern, pure frontend dashboard for managing OpenFGA authorization servers. Connect to your OpenFGA instance and manage stores, authorization models, relationship tuples, and run queries - all from your browser.
 
@@ -39,7 +39,7 @@ A modern, pure frontend dashboard for managing OpenFGA authorization servers. Co
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/openfga-dashboard.git
+   git clone https://github.com/dz1922/openfga-dashboard.git
    cd openfga-dashboard
    ```
 
@@ -79,7 +79,7 @@ A modern, pure frontend dashboard for managing OpenFGA authorization servers. Co
 
 ### Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/openfga-dashboard)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dz1922/openfga-dashboard)
 
 ### Build for Production
 
@@ -120,7 +120,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
