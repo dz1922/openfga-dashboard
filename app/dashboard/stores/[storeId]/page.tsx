@@ -92,11 +92,11 @@ export default function StoreOverviewPage() {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/25">
-            <Database className="h-7 w-7 text-white" />
+            <Database className="h-6 w-6 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
                 {currentStore.name}
               </h1>
               {playgroundMode && (
