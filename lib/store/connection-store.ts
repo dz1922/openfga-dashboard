@@ -246,6 +246,7 @@ export const useConnectionStore = create<ConnectionState>()(
         currentStoreId: state.currentStoreId,
         playgroundMode: state.playgroundMode,
       }),
+      skipHydration: true,
       onRehydrateStorage: () => (state) => {
         // Recreate client instance after rehydration
         if (state?.config && !state.playgroundMode) {
@@ -261,6 +262,11 @@ export const useConnectionStore = create<ConnectionState>()(
     }
   )
 )
+
+// Hydrate the store on client side
+if (typeof window !== 'undefined') {
+  useConnectionStore.persist.rehydrate()
+}
 
 // Hook to get a connected client or throw
 export function useOpenFGAClient(): OpenFGAClient {
