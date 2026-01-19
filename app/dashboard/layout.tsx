@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
-import { Footer } from '@/components/layout/footer'
 import { useConnectionStore } from '@/lib/store/connection-store'
 
 export default function DashboardLayout({
@@ -40,7 +39,6 @@ export default function DashboardLayout({
           <div className="container py-6 pr-6">{children}</div>
         </main>
       </div>
-      <Footer />
     </div>
   )
 }
