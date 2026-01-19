@@ -116,7 +116,7 @@ export function Sidebar() {
         {/* Bottom Links */}
         <div className="pl-4 pt-4 border-t space-y-1">
           <a
-            href="https://openfga.dev/docs/getting-started/install-sdk"
+            href="https://openfga.dev/docs/fga"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
