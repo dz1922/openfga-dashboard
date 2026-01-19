@@ -9,7 +9,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { ModelGraph } from '@/components/model/model-graph'
 import { useAuthorizationModels } from '@/hooks/use-openfga'
 import { useConnectionStore, PLAYGROUND_SAMPLE_MODEL } from '@/lib/store/connection-store'
-import { Loader2, AlertCircle, Save, CheckCircle2, History, Code2, GitBranch, Sparkles, Play } from 'lucide-react'
+import { Loader2, AlertCircle, Save, CheckCircle2, History, Code2, GitBranch, Sparkles, FileCode } from 'lucide-react'
 import type { AuthorizationModel, WriteAuthorizationModelRequest } from '@/lib/openfga/types'
 
 // Dynamically import Monaco Editor to avoid SSR issues
@@ -168,17 +168,17 @@ export default function ModelPage() {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/25">
-              <Sparkles className="h-5 w-5 text-white" />
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/25">
+              <FileCode className="h-6 w-6 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-                  Model Explorer
+                  Authorization Model
                 </h1>
                 {playgroundMode && (
                   <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
-                    <Play className="h-3 w-3 mr-1" />
+                    <Sparkles className="h-3 w-3 mr-1" />
                     Playground
                   </Badge>
                 )}

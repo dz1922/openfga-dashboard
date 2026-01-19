@@ -19,7 +19,6 @@ import {
   Clock,
   Hash,
   Tag,
-  Play,
   Sparkles
 } from 'lucide-react'
 import Link from 'next/link'
@@ -92,8 +91,8 @@ export default function StoreOverviewPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className={`p-3 rounded-2xl shadow-lg ${playgroundMode ? 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-orange-500/25' : 'bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/25'}`}>
-            {playgroundMode ? <Play className="h-7 w-7 text-white" /> : <Database className="h-7 w-7 text-white" />}
+          <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/25">
+            <Database className="h-7 w-7 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-3">

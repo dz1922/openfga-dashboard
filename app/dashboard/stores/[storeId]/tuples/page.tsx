@@ -8,7 +8,7 @@ import { TupleForm } from '@/components/tuples/tuple-form'
 import { TupleList } from '@/components/tuples/tuple-list'
 import { useTuples } from '@/hooks/use-openfga'
 import { useConnectionStore } from '@/lib/store/connection-store'
-import { AlertCircle, Link2, Play, Sparkles, Info } from 'lucide-react'
+import { AlertCircle, Link2, Sparkles, Info } from 'lucide-react'
 import type { TupleKey, Tuple } from '@/lib/openfga/types'
 
 // Sample tuples for playground mode
@@ -93,8 +93,8 @@ export default function TuplesPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start gap-4">
-        <div className={`p-3 rounded-2xl shadow-lg ${playgroundMode ? 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-orange-500/25' : 'bg-gradient-to-br from-violet-500 to-purple-600 shadow-violet-500/25'}`}>
-          {playgroundMode ? <Play className="h-6 w-6 text-white" /> : <Link2 className="h-6 w-6 text-white" />}
+        <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-violet-500 to-purple-600 shadow-violet-500/25">
+          <Link2 className="h-6 w-6 text-white" />
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-3">

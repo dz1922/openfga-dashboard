@@ -8,11 +8,15 @@ import { ExpandPanel } from '@/components/query/expand-panel'
 import { ListObjectsPanel } from '@/components/query/list-objects-panel'
 import { ListUsersPanel } from '@/components/query/list-users-panel'
 import { useQueries } from '@/hooks/use-openfga'
+import { useConnectionStore } from '@/lib/store/connection-store'
+import { Search, Sparkles } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import type { CheckResponse, ExpandResponse, ListObjectsResponse, ListUsersResponse } from '@/lib/openfga/types'
 
 export default function QueryPage() {
   const params = useParams()
   const storeId = params.storeId as string
+  const playgroundMode = useConnectionStore((state) => state.playgroundMode)
 
   const { loading, check, expand, listObjects, listUsers } = useQueries(storeId)
 
@@ -67,11 +71,27 @@ export default function QueryPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Query Operations</h1>
-        <p className="text-muted-foreground">
-          Test your authorization model with different query operations
-        </p>
+      {/* Header */}
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-amber-500 to-orange-600 shadow-amber-500/25">
+          <Search className="h-6 w-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              Query Operations
+            </h1>
+            {playgroundMode && (
+              <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
+                <Sparkles className="h-3 w-3 mr-1" />
+                Playground
+              </Badge>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground mt-1">
+            Test your authorization model with different query operations
+          </p>
+        </div>
       </div>
 
       <Tabs defaultValue="check" className="space-y-4">
