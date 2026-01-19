@@ -9,6 +9,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { ModelGraph } from '@/components/model/model-graph'
 import { useAuthorizationModels } from '@/hooks/use-openfga'
 import { useConnectionStore, PLAYGROUND_SAMPLE_MODEL } from '@/lib/store/connection-store'
+import { modelToDsl, dslToModel } from '@/lib/openfga/dsl-converter'
 import { Loader2, AlertCircle, Save, CheckCircle2, History, Code2, GitBranch, Sparkles, FileCode } from 'lucide-react'
 import type { AuthorizationModel, WriteAuthorizationModelRequest } from '@/lib/openfga/types'
 
@@ -27,11 +28,6 @@ const Editor = dynamic(
     ),
   }
 )
-
-function modelToJson(model: AuthorizationModel): string {
-  const { id, ...rest } = model
-  return JSON.stringify(rest, null, 2)
-}
 
 export default function ModelPage() {
   const params = useParams()
@@ -54,7 +50,7 @@ export default function ModelPage() {
   // Initialize with sample model in playground mode
   useEffect(() => {
     if (playgroundMode && !initialized) {
-      setEditorValue(modelToJson(PLAYGROUND_SAMPLE_MODEL))
+      setEditorValue(modelToDsl(PLAYGROUND_SAMPLE_MODEL))
       setSelectedModelId(PLAYGROUND_SAMPLE_MODEL.id)
       setInitialized(true)
     }
@@ -71,7 +67,7 @@ export default function ModelPage() {
   useEffect(() => {
     if (!playgroundMode && models.length > 0 && !selectedModelId) {
       setSelectedModelId(models[0].id)
-      setEditorValue(modelToJson(models[0]))
+      setEditorValue(modelToDsl(models[0]))
       setInitialized(true)
     }
   }, [models, selectedModelId, playgroundMode])
@@ -80,14 +76,14 @@ export default function ModelPage() {
   const handleModelSelect = useCallback((modelId: string) => {
     if (playgroundMode) {
       if (modelId === PLAYGROUND_SAMPLE_MODEL.id) {
-        setEditorValue(modelToJson(PLAYGROUND_SAMPLE_MODEL))
+        setEditorValue(modelToDsl(PLAYGROUND_SAMPLE_MODEL))
       }
       setSelectedModelId(modelId)
     } else {
       setSelectedModelId(modelId)
       const model = models.find(m => m.id === modelId)
       if (model) {
-        setEditorValue(modelToJson(model))
+        setEditorValue(modelToDsl(model))
       }
     }
     setParseError(null)
@@ -95,20 +91,19 @@ export default function ModelPage() {
     setSaveSuccess(false)
   }, [models, playgroundMode])
 
-  // Parse editor value to get current model for visualization
+  // Parse editor value (DSL) to get current model for visualization
   const currentModel = useMemo((): AuthorizationModel | null => {
     try {
-      const parsed = JSON.parse(editorValue) as WriteAuthorizationModelRequest
+      const parsed = dslToModel(editorValue)
       setParseError(null)
       return {
         id: selectedModelId || 'new',
         schema_version: parsed.schema_version,
         type_definitions: parsed.type_definitions,
-        conditions: parsed.conditions,
       }
     } catch (e) {
       if (editorValue.trim()) {
-        setParseError((e instanceof Error ? e.message : 'Invalid JSON'))
+        setParseError((e instanceof Error ? e.message : 'Invalid DSL syntax'))
       }
       return null
     }
@@ -126,12 +121,12 @@ export default function ModelPage() {
     setSaveError(null)
     setSaveSuccess(false)
 
-    // Validate JSON
+    // Parse DSL to JSON for saving
     let modelData: WriteAuthorizationModelRequest
     try {
-      modelData = JSON.parse(editorValue) as WriteAuthorizationModelRequest
+      modelData = dslToModel(editorValue) as WriteAuthorizationModelRequest
     } catch (e) {
-      setSaveError('Invalid JSON: ' + (e instanceof Error ? e.message : 'Parse error'))
+      setSaveError('Invalid DSL: ' + (e instanceof Error ? e.message : 'Parse error'))
       return
     }
 
@@ -153,11 +148,11 @@ export default function ModelPage() {
   // Check if editor content differs from selected model
   const hasChanges = useMemo(() => {
     if (playgroundMode) {
-      return editorValue !== modelToJson(PLAYGROUND_SAMPLE_MODEL)
+      return editorValue !== modelToDsl(PLAYGROUND_SAMPLE_MODEL)
     }
     const selectedModel = models.find(m => m.id === selectedModelId)
     if (!selectedModel) return editorValue.trim().length > 0
-    return editorValue !== modelToJson(selectedModel)
+    return editorValue !== modelToDsl(selectedModel)
   }, [editorValue, selectedModelId, models, playgroundMode])
 
   const storeName = currentStore?.name || 'Store'
@@ -307,7 +302,7 @@ export default function ModelPage() {
           <div className="flex-1 min-h-[400px]">
             <Editor
               height="100%"
-              defaultLanguage="json"
+              defaultLanguage="plaintext"
               value={editorValue}
               onChange={(v) => setEditorValue(v || '')}
               theme="vs-dark"
@@ -318,8 +313,6 @@ export default function ModelPage() {
                 lineNumbers: 'on',
                 scrollBeyondLastLine: false,
                 wordWrap: 'on',
-                formatOnPaste: true,
-                formatOnType: true,
                 tabSize: 2,
                 automaticLayout: true,
                 padding: { top: 16, bottom: 16 },
@@ -363,7 +356,7 @@ export default function ModelPage() {
                   <AlertCircle className="h-10 w-10 text-red-500" />
                 </div>
                 <div className="space-y-1">
-                  <p className="font-medium text-slate-900 dark:text-slate-100">Invalid JSON</p>
+                  <p className="font-medium text-slate-900 dark:text-slate-100">Invalid DSL Syntax</p>
                   <p className="text-sm text-muted-foreground max-w-xs">Fix the syntax error in the editor to see the visualization</p>
                 </div>
                 <code className="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs text-red-600 dark:text-red-400 max-w-full overflow-auto">
@@ -384,7 +377,7 @@ export default function ModelPage() {
           <span>
             {playgroundMode
               ? 'Playground mode - changes are not saved to any server'
-              : 'Edit the JSON model and watch the graph update in real-time'
+              : 'Edit the DSL model and watch the graph update in real-time'
             }
           </span>
         </div>
