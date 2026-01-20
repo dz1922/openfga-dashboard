@@ -89,41 +89,39 @@ export default function StoreOverviewPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-4">
-          <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/25">
-            <Database className="h-6 w-6 text-white" />
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/25">
+          <Database className="h-6 w-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              {currentStore.name}
+            </h1>
+            {playgroundMode && (
+              <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
+                <Sparkles className="h-3 w-3 mr-1" />
+                Playground
+              </Badge>
+            )}
           </div>
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-                {currentStore.name}
-              </h1>
-              {playgroundMode && (
-                <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
-                  <Sparkles className="h-3 w-3 mr-1" />
-                  Playground
-                </Badge>
-              )}
-            </div>
-            <div className="flex items-center gap-2 mt-1">
-              <code className="text-sm text-muted-foreground font-mono">
-                {currentStore.id}
-              </code>
-              {!playgroundMode && (
-                <button
-                  onClick={handleCopyId}
-                  className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                  title="Copy Store ID"
-                >
-                  {copied ? (
-                    <Check className="h-3.5 w-3.5 text-emerald-500" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                  )}
-                </button>
-              )}
-            </div>
+          <div className="flex items-center gap-2 mt-1">
+            <code className="text-sm text-muted-foreground font-mono">
+              {currentStore.id}
+            </code>
+            {!playgroundMode && (
+              <button
+                onClick={handleCopyId}
+                className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                title="Copy Store ID"
+              >
+                {copied ? (
+                  <Check className="h-3.5 w-3.5 text-emerald-500" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>

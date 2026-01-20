@@ -169,32 +169,28 @@ export default function ModelPage() {
   return (
     <div className="h-[calc(100vh-120px)] flex flex-col gap-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-2xl shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-blue-500/25">
+          <FileCode className="h-6 w-6 text-white" />
+        </div>
+        <div className="flex-1">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/25">
-              <FileCode className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-                  Authorization Model
-                </h1>
-                {playgroundMode && (
-                  <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
-                    <Sparkles className="h-3 w-3 mr-1" />
-                    Playground
-                  </Badge>
-                )}
-              </div>
-              <p className="text-sm text-muted-foreground">
-                {playgroundMode
-                  ? 'Explore and edit sample authorization models'
-                  : 'Edit your model and visualize relationships in real-time'
-                }
-              </p>
-            </div>
+            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              Authorization Model
+            </h1>
+            {playgroundMode && (
+              <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
+                <Sparkles className="h-3 w-3 mr-1" />
+                Playground
+              </Badge>
+            )}
           </div>
+          <p className="text-sm text-muted-foreground mt-1">
+            {playgroundMode
+              ? 'Explore and edit sample authorization models'
+              : 'Edit your model and visualize relationships in real-time'
+            }
+          </p>
         </div>
 
         <div className="flex items-center gap-3">

@@ -9,8 +9,9 @@ import { ListObjectsPanel } from '@/components/query/list-objects-panel'
 import { ListUsersPanel } from '@/components/query/list-users-panel'
 import { useQueries } from '@/hooks/use-openfga'
 import { useConnectionStore } from '@/lib/store/connection-store'
-import { Search, Sparkles } from 'lucide-react'
+import { Search, Sparkles, AlertCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import type { CheckResponse, ExpandResponse, ListObjectsResponse, ListUsersResponse } from '@/lib/openfga/types'
 
 export default function QueryPage() {
@@ -94,30 +95,43 @@ export default function QueryPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="check" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="check">Check</TabsTrigger>
-          <TabsTrigger value="expand">Expand</TabsTrigger>
-          <TabsTrigger value="list-objects">List Objects</TabsTrigger>
-          <TabsTrigger value="list-users">List Users</TabsTrigger>
-        </TabsList>
+      {playgroundMode ? (
+        <Alert className="border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/50">
+          <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+          <AlertTitle className="text-amber-800 dark:text-amber-200">Query operations unavailable</AlertTitle>
+          <AlertDescription className="text-amber-700 dark:text-amber-300">
+            Query operations (Check, Expand, List Objects, List Users) require a connection to a real OpenFGA server.
+            In Playground mode, you can explore the authorization model and sample tuples, but cannot execute queries.
+            <br /><br />
+            To use query operations, connect to your own OpenFGA server from the home page.
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <Tabs defaultValue="check" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="check">Check</TabsTrigger>
+            <TabsTrigger value="expand">Expand</TabsTrigger>
+            <TabsTrigger value="list-objects">List Objects</TabsTrigger>
+            <TabsTrigger value="list-users">List Users</TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="check">
-          <CheckPanel onCheck={handleCheck} loading={loading} />
-        </TabsContent>
+          <TabsContent value="check">
+            <CheckPanel onCheck={handleCheck} loading={loading} />
+          </TabsContent>
 
-        <TabsContent value="expand">
-          <ExpandPanel onExpand={handleExpand} loading={loading} />
-        </TabsContent>
+          <TabsContent value="expand">
+            <ExpandPanel onExpand={handleExpand} loading={loading} />
+          </TabsContent>
 
-        <TabsContent value="list-objects">
-          <ListObjectsPanel onListObjects={handleListObjects} loading={loading} />
-        </TabsContent>
+          <TabsContent value="list-objects">
+            <ListObjectsPanel onListObjects={handleListObjects} loading={loading} />
+          </TabsContent>
 
-        <TabsContent value="list-users">
-          <ListUsersPanel onListUsers={handleListUsers} loading={loading} />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="list-users">
+            <ListUsersPanel onListUsers={handleListUsers} loading={loading} />
+          </TabsContent>
+        </Tabs>
+      )}
     </div>
   )
 }
