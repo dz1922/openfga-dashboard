@@ -17,6 +17,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV STANDALONE=true
 
+RUN mkdir -p public
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -29,8 +30,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy public folder if it exists
-# COPY --from=builder /app/public ./public
+COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
