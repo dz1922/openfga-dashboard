@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // output: 'standalone', // Only needed for Docker deployment
-}
+  // Enable standalone output only when STANDALONE env var is set (for Docker builds)
+  ...(process.env.STANDALONE === "true" && { output: "standalone" }),
+};
 
-export default nextConfig
+export default nextConfig;
