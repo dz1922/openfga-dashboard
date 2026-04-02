@@ -2,6 +2,8 @@
 
 [![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+> **🌐 [Live Demo → openfga-dashboard.xyz](https://www.openfga-dashboard.xyz/)** — Try it instantly, no installation required.
+
 A modern, pure frontend dashboard for managing OpenFGA authorization servers. Connect to your OpenFGA instance and manage stores, authorization models, relationship tuples, and run queries - all from your browser.
 
 ## Features
